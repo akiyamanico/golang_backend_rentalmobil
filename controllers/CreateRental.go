@@ -20,6 +20,7 @@ func CreateRental(c *gin.Context) {
 		return
 	}
 	var request models.CreateRental
+	fmt.Println(request.ID)
 	if err := c.BindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -40,6 +41,7 @@ func CreateRental(c *gin.Context) {
 		c.JSON(http.StatusForbidden, gin.H{"message": "Mobil Sedang Digunakan!"})
 	} else {
 		c.JSON(http.StatusOK, gin.H{"message": "Mobil Tersedia"})
+		CreateStatusRental(c)
 	}
 	c.JSON(http.StatusOK, "OK")
 

@@ -3,7 +3,7 @@ package models
 import "github.com/jinzhu/gorm"
 
 type CreateRental struct {
-	ID              uint   `json:"id" gorm:"primary_key" form:"id"`
+	ID              uint   `json:"id" gorm:"primary_key"`
 	Username        string `json:"username"`
 	Pinjaman        string `json:"pinjaman"`
 	Status          string `json:"status"`
