@@ -34,14 +34,9 @@ func SetupRouter() *gin.Engine {
 	{
 		grp3.GET("", controllers.GetStatusListRental)
 	}
-	adminRental := r.Group("/admin")
-	{
-		adminRental.PUT("/status_rentals/:id", controllers.UpdateStatusRental)
-	}
 	memberRental := r.Group("/users")
 	{
-		memberRental.PUT("/status_rentals/:id", controllers.UpdateStatusRental)
-		memberRental.POST("/status_rentals", controllers.CreateStatusRental)
+		memberRental.POST("/create_rentals", controllers.CreateRental)
 	}
 	return r
 }

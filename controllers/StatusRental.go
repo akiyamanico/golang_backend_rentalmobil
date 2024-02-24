@@ -21,23 +21,6 @@ func GetStatusRental(c *gin.Context) {
 	c.JSON(http.StatusOK, status)
 }
 
-func UpdateStatusRental(c *gin.Context) {
-	configInstance := config.Build()
-	statusRentalID := c.Param("id")
-	var statusRental models.StatusRental
-
-	if err := c.ShouldBindJSON(&statusRental); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	err := models.UpdateStatusRental(configInstance.DB, statusRentalID, &statusRental)
-	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
-		return
-	}
-	c.JSON(http.StatusOK, statusRental)
-}
-
 func CreateStatusRental(c *gin.Context) {
 	configInstance := config.Build()
 	c.Request.Body = http.MaxBytesReader(c.Writer, c.Request.Body, 104857698)
