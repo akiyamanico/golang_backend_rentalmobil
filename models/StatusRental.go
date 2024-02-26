@@ -16,10 +16,6 @@ func GetStatusRental(db *gorm.DB, status *StatusRental, ID string) error {
 	return db.Where("id=?", ID).First(status).Error
 }
 
-func UpdateStatusRental(db *gorm.DB, statusRentalID string, statusRental *StatusRental) error {
-	return db.Model(&StatusRental{}).Where("id =?", statusRentalID).Update(statusRental).Error
-}
-
 func CreateStatusRental(db *gorm.DB, createStatus *StatusRental) error {
 	return db.Create(createStatus).Error
 }
