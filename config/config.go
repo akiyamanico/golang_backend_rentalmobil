@@ -29,7 +29,6 @@ func Build() *Config {
 	if err != nil {
 		panic("Failed to connect to the database")
 	}
-	db.LogMode(true)
 	config.DB = db
 	return &config
 }

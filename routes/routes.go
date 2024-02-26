@@ -29,11 +29,12 @@ func SetupRouter() *gin.Engine {
 	}
 	grp2 := r.Group("/admin")
 	{
+		grp2.GET("/listavailable", controllers.GetMobil)
 		grp2.GET("/listrental/:id", controllers.GetStatusRental)
 		grp2.PUT("/confirm/:id", controllers.UpdateConfirm)
 		grp2.PUT("/confirmpengembalian/:id", controllers.PengembalianConfirmAdmin)
 	}
-	grp3 := r.Group("/rentalavailable")
+	grp3 := r.Group("/rentalall")
 	{
 		grp3.GET("", controllers.GetStatusListRental)
 	}
