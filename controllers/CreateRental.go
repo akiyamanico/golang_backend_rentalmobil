@@ -53,6 +53,5 @@ func CreateRental(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "Mobil Tersedia"})
 		CreateStatusRental(c, status.Status, status.Pinjaman)
 	}
-	c.JSON(http.StatusOK, "OK")
 
 }

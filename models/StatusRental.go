@@ -12,8 +12,8 @@ type StatusRental struct {
 	Dokumenpinjaman string `json:"dokumenpinjaman"`
 }
 
-func GetStatusRental(db *gorm.DB, status *[]StatusRental) error {
-	return db.Find(status).Error
+func GetStatusRental(db *gorm.DB, status *StatusRental, ID string) error {
+	return db.Where("id=?", ID).First(status).Error
 }
 
 func UpdateStatusRental(db *gorm.DB, statusRentalID string, statusRental *StatusRental) error {

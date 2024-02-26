@@ -12,10 +12,11 @@ import (
 
 func GetStatusRental(c *gin.Context) {
 	configInstance := config.Build()
-	var status []models.StatusRental
-	err := models.GetStatusRental(configInstance.DB, &status)
+	ID := c.Param("id")
+	var status models.StatusRental
+	err := models.GetStatusRental(configInstance.DB, &status, ID)
 	if err != nil {
-		c.JSON(500, gin.H{"error": err.Error()})
+		c.AbortWithStatus(http.StatusNotFound)
 		return
 	}
 	c.JSON(http.StatusOK, status)

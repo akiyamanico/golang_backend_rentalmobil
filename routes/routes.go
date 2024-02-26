@@ -26,11 +26,11 @@ func SetupRouter() *gin.Engine {
 		grp1.GET("/:id", controllers.GetUserByID)
 		grp1.POST("", controllers.CreateUser)
 	}
-	grp2 := r.Group("/rental")
+	grp2 := r.Group("/admin")
 	{
-		grp2.GET("", controllers.GetStatusRental)
+		grp2.GET("/listrental/:id", controllers.GetStatusRental)
 	}
-	grp3 := r.Group("/listrental")
+	grp3 := r.Group("/rentalavailable")
 	{
 		grp3.GET("", controllers.GetStatusListRental)
 	}
