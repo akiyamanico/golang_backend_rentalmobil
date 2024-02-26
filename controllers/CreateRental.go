@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
@@ -19,19 +20,36 @@ func CreateRental(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Internal Server Error"})
 		return
 	}
+
 	var request models.CreateRental
-	fmt.Println(request.ID)
-	if err := c.BindJSON(&request); err != nil {
+	idStr := strconv.Itoa(int(request.ID))
+	fmt.Println("ini id", request.ID)
+
+	form, err := c.MultipartForm()
+	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	id := request.ID
-	query := "SELECT status FROM status_list_rentals WHERE id = ?"
-	row := db.QueryRow(query, id)
+	fmt.Println("ini form", form.Value)
 
+	files := form.File["dokumenpinjaman"]
+	if len(files) == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "No file uploaded"})
+		return
+	}
+	fmt.Println(request.ID)
+	file := files[0]
+	query := "SELECT status, namamobil FROM status_list_rentals WHERE id = ?"
+	row := db.QueryRow(query, 2)
+
+	imageName := file.Filename
 	var status models.CreateRental
-	fmt.Println("ini id", id)
-	err = row.Scan(&status.Status)
+	username := c.PostForm("username")
+	request.Dokumenpinjaman = imageName
+	request.Username = username
+
+	fmt.Println("ini id", idStr)
+	err = row.Scan(&status.Status, &status.Pinjaman)
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Internal Server Error"})
@@ -41,7 +59,7 @@ func CreateRental(c *gin.Context) {
 		c.JSON(http.StatusForbidden, gin.H{"message": "Mobil Sedang Digunakan!"})
 	} else {
 		c.JSON(http.StatusOK, gin.H{"message": "Mobil Tersedia"})
-		CreateStatusRental(c)
+		CreateStatusRental(c, status.Status, status.Pinjaman)
 	}
 	c.JSON(http.StatusOK, "OK")
 

@@ -21,7 +21,7 @@ func GetStatusRental(c *gin.Context) {
 	c.JSON(http.StatusOK, status)
 }
 
-func CreateStatusRental(c *gin.Context) {
+func CreateStatusRental(c *gin.Context, status, pinjaman string) {
 	configInstance := config.Build()
 	c.Request.Body = http.MaxBytesReader(c.Writer, c.Request.Body, 104857698)
 	form, err := c.MultipartForm()
@@ -43,8 +43,7 @@ func CreateStatusRental(c *gin.Context) {
 	}
 	var statusRental models.StatusRental
 	username := c.PostForm("username")
-	pinjaman := c.PostForm("pinjaman")
-	status := c.PostForm("status")
+
 	statusRental.Username = username
 	statusRental.Pinjaman = pinjaman
 	statusRental.Status = status
