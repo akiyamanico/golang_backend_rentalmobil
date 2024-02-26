@@ -17,8 +17,6 @@ func PengembalianAdmin(db *gorm.DB, confirm *StatusRental, status *StatusRental,
 	if err != nil {
 		return err
 	}
-	fmt.Println("ini confirm", confirm)
-	fmt.Println("ini id", id)
 	err = db.Select("pinjaman").First(status, id).Error
 	if err != nil {
 		return err
