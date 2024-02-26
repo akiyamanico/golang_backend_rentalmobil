@@ -17,7 +17,7 @@ func CreateRental(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Internal Server Error"})
 		return
 	}
-	var request models.CreateRental
+	var request models.StatusRental
 	form, err := c.MultipartForm()
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -37,7 +37,7 @@ func CreateRental(c *gin.Context) {
 	row := db.QueryRow(query, idValue)
 
 	imageName := file.Filename
-	var status models.CreateRental
+	var status models.StatusRental
 	username := c.PostForm("username")
 	request.Dokumenpinjaman = imageName
 	request.Username = username

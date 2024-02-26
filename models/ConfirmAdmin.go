@@ -2,15 +2,7 @@ package models
 
 import "github.com/jinzhu/gorm"
 
-type Confirm struct {
-	ID              uint   `json:"id" gorm:"primary_key"`
-	Username        string `json:"username"`
-	Pinjaman        string `json:"pinjaman"`
-	Status          string `json:"status"`
-	Dokumenpinjaman string `json:"dokumenpinjaman"`
-}
-
-func UpdateConfirm(db *gorm.DB, confirm *Confirm, status *StatusRental, id string) error {
+func UpdateConfirm(db *gorm.DB, confirm *StatusRental, status *StatusRental, id string) error {
 	updateFields := map[string]interface{}{
 		"status": "Sudah Dikonfirmasi!",
 	}

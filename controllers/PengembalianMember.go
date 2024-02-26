@@ -8,18 +8,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func UpdateConfirm(c *gin.Context) {
+func PengembalianConfirm(c *gin.Context) {
 	configInstance := config.Build()
 	id := c.Param("id")
 	var confirm models.StatusRental
-	var status models.StatusRental
 
 	c.BindJSON(&confirm)
-	err := models.UpdateConfirm(configInstance.DB, &confirm, &status, id)
+	err := models.Pengembalian(configInstance.DB, &confirm, id)
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "Terkonfirmasi"})
+	c.JSON(http.StatusOK, gin.H{"message": "Pengembalian sukses!"})
 }
