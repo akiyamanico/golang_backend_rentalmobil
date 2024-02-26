@@ -45,7 +45,7 @@ func CreateStatusRental(c *gin.Context, status, pinjaman string) {
 	username := c.PostForm("username")
 
 	statusRental.Username = username
-	statusRental.Pinjaman = pinjaman
+	statusRental.Pinjaman = "Menunggu Konfirmasi"
 	statusRental.Status = status
 	statusRental.Dokumenpinjaman = imageName
 	err = models.CreateStatusRental(configInstance.DB, &statusRental)
